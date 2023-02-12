@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DrawManager : MonoBehaviour,IBeginDragHandler, IEndDragHandler,IDragHandler
+public class DragManager : MonoBehaviour,IBeginDragHandler, IEndDragHandler,IDragHandler
 {
     public static GameObject beginDraggedIcon;
 

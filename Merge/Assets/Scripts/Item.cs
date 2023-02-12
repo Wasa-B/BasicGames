@@ -3,19 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
+[RequireComponent(typeof(DragManager))]
 public class Item : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-    
+    public int number;
+    [SerializeField] Color[] colors;
 
-    // Update is called once per frame
-    void Update()
+    public void SetItem(int newValue, Transform newParent)
     {
-        
+        number = newValue;
+        GetComponent<Image>().color = SetColor(number);
+        GetComponentInChildren<Text>().text = number.ToString();
+        transform.SetParent(newParent);
+
+    }
+
+    public Color SetColor(int colorValue)
+    {
+        if (colorValue < 10)
+            return colors[colorValue - 1];
+        else
+            return Color.black;
     }
 }

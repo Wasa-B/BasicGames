@@ -16,8 +16,8 @@ public class Slot : MonoBehaviour, IDropHandler
     {
         if(Icon() == null)
         {
-            DrawManager.beginDraggedIcon.transform.SetParent(transform);
-            DrawManager.beginDraggedIcon.transform.position = transform.position;
+            DragManager.beginDraggedIcon.transform.SetParent(transform);
+            DragManager.beginDraggedIcon.transform.position = transform.position;
         }
     }
 }
