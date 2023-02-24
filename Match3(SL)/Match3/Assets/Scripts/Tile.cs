@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace SweetRoad
 {
@@ -12,8 +13,18 @@ namespace SweetRoad
     {
         
         public TileType type = TileType.Normal;
+        public bool dropCandy = false;
 
-        public GameObject block;
-        
+        internal  bool defaultCandy = true;
+        internal  CandyType candy = CandyType.red;
+
+        GameObject Icon()
+        {
+            if (transform.childCount > 0)
+                return transform.GetChild(0).gameObject;
+            else
+                return null;
+        }
+
     }
 }
