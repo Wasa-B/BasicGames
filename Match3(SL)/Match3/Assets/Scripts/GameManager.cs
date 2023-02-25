@@ -10,8 +10,8 @@ namespace SweetRoad
 
     public class GameManager : MonoBehaviour
     {
-        enum GameState { Idle, Explosion, Drop }
-
+        enum GameState { Idle, Explosion, Drop, Match }
+        GameState state = GameState.Idle;
         static Queue<IEnumerator> behaviour = new Queue<IEnumerator>();
 
         static bool playerBehaviour = false;
@@ -24,14 +24,14 @@ namespace SweetRoad
 
         public Transform tileLayout;
         public Candy candyPrefab;
-
+        public CandyType[] candyList;
         public CandyData candyData;
         public TileData tileData;
         public Sprite[] normalTiles;
         Dictionary<TileType, Sprite> tileSprites;
         static Dictionary<CandyType, Sprite> candySprites;
-        static Vector2[,] tilePosition = new Vector2[9,9];
-
+        static Vector2[,] tilePosition = new Vector2[9, 9];
+        List<Candy> dropCandies;
 
         private void Awake()
         {
@@ -40,6 +40,7 @@ namespace SweetRoad
             tiles = new Tile[9, 9];
             candySprites = candyData.GetDictionary();
             tileSprites = tileData.GetDictionary();
+            dropCandies = new List<Candy>();
             Vector2 cellSize = GetComponentInChildren<GridLayoutGroup>().cellSize;
             for (int i = 0; i < tileLayout.childCount; ++i)
             {
@@ -50,16 +51,26 @@ namespace SweetRoad
                     tile.GetComponent<Image>().sprite = normalTiles[i % 2];
                 if (tile.defaultCandy == false) continue;
 
-                Candy ncandy = Instantiate<Candy>(candyPrefab, tile.transform);
-                ncandy.pos = new Vector2Int(i % 9, i / 9);
-                candies[i % 9, i / 9] = ncandy;
-                ncandy.type = tile.candy;
-                ncandy.GetComponent<Image>().sprite = candySprites[tile.candy];
+                Candy ncandy = GenerateCandy(new Vector2Int(i % 9, i / 9), tile.candy);
+                ncandy.transform.SetParent(tile.transform);
+                ncandy.transform.localPosition = Vector2.zero;
             }
 
 
             StartCoroutine(GameRoutine());
         }
+
+
+        Candy GenerateCandy(Vector2Int pos, CandyType type)
+        {
+            Candy ncandy = Instantiate<Candy>(candyPrefab, boardTransform);
+            ncandy.pos = new Vector2Int(pos.x, pos.y);
+            candies[pos.x, pos.y] = ncandy;
+            ncandy.type = type;
+            ncandy.GetComponent<Image>().sprite = candySprites[type];
+            return ncandy;
+        }
+
         private IEnumerator Start()
         {
             yield return null;
@@ -68,13 +79,20 @@ namespace SweetRoad
                 {
                     if (candies[i, j] != null)
                         candies[i, j].transform.SetParent(boardTransform);
-                    tilePosition[i,j] = tiles[i, j].transform.position;
+                    tilePosition[i, j] = tiles[i, j].transform.position;
                 }
         }
-
+        static internal Vector2 GetPosition(Vector2Int pos)
+        {
+            return tilePosition[pos.x, pos.y];
+        }
         static Candy GetCandy(Vector2Int pos)
         {
             return candies[pos.x, pos.y];
+        }
+        CandyType RandomCandy()
+        {
+            return candyList[Random.Range(0,candyList.Length)];
         }
         static bool CheckCandy(Vector2Int pos, CandyType type)
         {
@@ -86,6 +104,7 @@ namespace SweetRoad
 
         static bool CheckMatch(Candy candy)
         {
+            if (candy.type == CandyType.white || candy.type == CandyType.rainbow) return false;
             bool horizontal = false;
             bool vertical = false;
             bool square = false;
@@ -197,6 +216,7 @@ namespace SweetRoad
                 candy.gameObject.SetActive(true);
                 candy.GetComponent<Image>().sprite = candySprites[CandyType.white];
                 candy.type = CandyType.white;
+                candies[candy.pos.x, candy.pos.y] = candy;
             }
 
             return vertical || horizontal || square;
@@ -220,11 +240,30 @@ namespace SweetRoad
                 if (behaviour.Count > 0)
                 {
                     playerBehaviour = false;
-                    while(behaviour.Count > 0)
+                    while (behaviour.Count > 0)
                         yield return behaviour.Dequeue();
 
                     //Drop Candy
-
+                    while (DropCandy())
+                    {
+                        bool drop = true;
+                        //사탕 이동 대기
+                        while (drop)
+                        {
+                            drop = false;
+                            foreach (var dc in dropCandies)
+                            {
+                                if (dc.state == CandyState.Drop) drop = true;
+                            }
+                            yield return null;
+                        }
+                        //이동한 사탕 매칭확인
+                        foreach (var dc in dropCandies)
+                        {
+                            CheckMatch(dc);
+                        }
+                        dropCandies.Clear();
+                    }
                 }
                 else
                 {
@@ -289,6 +328,57 @@ namespace SweetRoad
                 behaviour.Enqueue(SwapCandyRoutine(candy, dir));
             }
             else yield return null;
+        }
+
+        bool DropCandy()
+        {
+            Dictionary<Vector2Int, int> genCount = new Dictionary<Vector2Int, int>();
+            float sizeY = tilePosition[0, 0].y - tilePosition[0, 1].y;
+            for (int x = 0; x < 8; ++x)
+            {
+                for (int y = 8; y >= 0; --y)
+                {
+                    if (tiles[x, y].type == TileType.Normal && candies[x, y] == null)
+                    {
+                        if (y >= 0)
+                        {
+                            for (int y2 = y; y2 >= 0; --y2)
+                            {
+                                if (candies[x, y2] != null)
+                                {
+                                    candies[x, y] = candies[x, y2];
+                                    candies[x, y2] = null;
+                                    dropCandies.Add(candies[x, y]);
+                                    candies[x, y].state = CandyState.Drop;
+                                    candies[x, y].pos = new Vector2Int(x, y);
+                                    break;
+                                }
+                                //일반타일이 아닐 때,
+                                else if (y2 == 0 || tiles[x, y2 - 1].type != TileType.Normal)
+                                {
+                                    if (tiles[x, y2].dropCandy)
+                                    {
+                                        Vector2Int gpos = new Vector2Int(x, y2);
+                                        if (genCount.ContainsKey(gpos) == false)
+                                        {
+                                            genCount.Add(gpos, 0);
+                                        }
+                                        genCount[gpos] += 1;
+
+                                        Candy nCandy = GenerateCandy(new Vector2Int(x, y), RandomCandy());
+                                        nCandy.transform.position = tilePosition[x, y2] + Vector2.up * sizeY * genCount[gpos];
+                                        nCandy.state = CandyState.Drop;
+                                        dropCandies.Add(nCandy);
+                                    }
+                                    break;
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+            return dropCandies.Count > 0;
         }
     }
 
