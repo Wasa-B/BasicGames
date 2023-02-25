@@ -30,7 +30,7 @@ namespace SweetRoad
         public Sprite[] normalTiles;
         Dictionary<TileType, Sprite> tileSprites;
         static Dictionary<CandyType, Sprite> candySprites;
-        static Vector2[,] tilePosition;
+        static Vector2[,] tilePosition = new Vector2[9,9];
 
 
         private void Awake()
@@ -55,7 +55,6 @@ namespace SweetRoad
                 candies[i % 9, i / 9] = ncandy;
                 ncandy.type = tile.candy;
                 ncandy.GetComponent<Image>().sprite = candySprites[tile.candy];
-
             }
 
 
@@ -221,7 +220,11 @@ namespace SweetRoad
                 if (behaviour.Count > 0)
                 {
                     playerBehaviour = false;
-                    yield return behaviour.Dequeue();
+                    while(behaviour.Count > 0)
+                        yield return behaviour.Dequeue();
+
+                    //Drop Candy
+
                 }
                 else
                 {

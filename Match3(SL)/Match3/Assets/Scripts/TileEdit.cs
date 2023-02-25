@@ -37,18 +37,19 @@ namespace SweetRoad
                             tile.GetComponent<Image>().sprite = candyInfo[candyType];
                             tile.candy = candyType;
                         }
-                        else
-                        {
-
-                        }
-                        
-                        
                     }
                     break;
+                case TileType.Blank:
+                    tile.GetComponent<Image>().sprite = null;
+                    tile.defaultCandy = false;
+                    break;
+                case TileType.Hole:
+                    tile.GetComponent<Image>().sprite = null;
+                    tile.defaultCandy = false;
+                    break;
+
             }
-            
             tile.type = type;
-            tile.defaultCandy = defaultCandy;
         }
     }
 
