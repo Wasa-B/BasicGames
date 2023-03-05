@@ -52,7 +52,7 @@ namespace SweetRoad
         Vector2 CalculateDirection(Vector2 start, Vector2 end)
         {
             Vector2 dir = end - start;
-            if(dir.magnitude < 30)
+            if(dir.magnitude < GameManager.GetCandySize().y *.7f)
             {
                 return Vector2.zero;
             }

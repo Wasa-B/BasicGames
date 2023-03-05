@@ -13,13 +13,22 @@ MonoBehaviour:
   m_Name: CandyData
   m_EditorClassIdentifier: 
   candyStatus:
-  - type: 1
-    sprite: {fileID: -1190085588, guid: d0d730ed0677cef4d9afc0328c04eca7, type: 3}
   - type: 0
-    sprite: {fileID: -1229455757, guid: d0d730ed0677cef4d9afc0328c04eca7, type: 3}
+    sprite: {fileID: -1679135792, guid: 0308960e786ecf740bd3d54d0efd3f07, type: 3}
+  - type: 1
+    sprite: {fileID: 1767050450, guid: 0308960e786ecf740bd3d54d0efd3f07, type: 3}
   - type: 2
-    sprite: {fileID: 1048901770, guid: d0d730ed0677cef4d9afc0328c04eca7, type: 3}
+    sprite: {fileID: -873098013, guid: 0308960e786ecf740bd3d54d0efd3f07, type: 3}
   - type: 3
-    sprite: {fileID: -657604819, guid: d0d730ed0677cef4d9afc0328c04eca7, type: 3}
+    sprite: {fileID: 391150112, guid: 0308960e786ecf740bd3d54d0efd3f07, type: 3}
   - type: 4
-    sprite: {fileID: -2413806693520163455, guid: 8cfb1e76668db5246951f0233ccb2f02, type: 3}
+    sprite: {fileID: -1318297210, guid: 82b76c6ccf8226b488110e20017aa280, type: 3}
+  - type: 5
+    sprite: {fileID: 1498409351, guid: 0308960e786ecf740bd3d54d0efd3f07, type: 3}
+  spCandyStatus:
+  - type: 2
+    sprite: {fileID: -900971762, guid: 0308960e786ecf740bd3d54d0efd3f07, type: 3}
+  - type: 1
+    sprite: {fileID: -1553851933, guid: 0308960e786ecf740bd3d54d0efd3f07, type: 3}
+  - type: 3
+    sprite: {fileID: -479814171, guid: 0308960e786ecf740bd3d54d0efd3f07, type: 3}

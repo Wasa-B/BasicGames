@@ -15,8 +15,8 @@ namespace SweetRoad
         public TileType type = TileType.Normal;
         public bool dropCandy = false;
 
-        internal  bool defaultCandy = true;
-        internal  CandyType candy = CandyType.red;
+        public bool defaultCandy = true;
+        public CandyType candy = CandyType.red;
 
         GameObject Icon()
         {
