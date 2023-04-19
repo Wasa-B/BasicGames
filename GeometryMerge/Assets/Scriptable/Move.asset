@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 432e35349ee59b64e8b1271e151971a7, type: 3}
+  m_Name: Move
+  m_EditorClassIdentifier: 
+  state: 0
+  movementInfo:
+    status:
+      speed: 5
+      acc: 0
+      maxSpeed: 5
+    blockLayer:
+      serializedVersion: 2
+      m_Bits: 128
+    blockMove: 1

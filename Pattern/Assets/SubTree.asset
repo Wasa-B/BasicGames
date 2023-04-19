@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c57d7eed5a531f04b885dd00781f37a9, type: 3}
+  m_Name: SubTree
+  m_EditorClassIdentifier: 
+  rootNode: {fileID: 1547859176913327932}
+  nodes:
+  - {fileID: 1547859176913327932}
+  - {fileID: 8187696032834218513}
+  - {fileID: 6459711700152716734}
+  treeState: 0
+--- !u!114 &1547859176913327932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cfa33b07b784dc4c98e3469589f6154, type: 3}
+  m_Name: RootNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 33fc6f1345d9b184aad4cb6fa08d02b0
+  position: {x: 0, y: 0}
+  description: 
+  child: {fileID: 8187696032834218513}
+--- !u!114 &6459711700152716734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c77586fdcc51d164cb827c1e8283ee30, type: 3}
+  m_Name: DebugLogNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 8d842f36b4f1a3d48b35e96a5eb67e8e
+  position: {x: 8, y: 218}
+  description: 
+  message: SubTree
+  start: 0
+  stop: 0
+  update: 1
+--- !u!114 &8187696032834218513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50c8b2983827ddc4882890ce90a4953c, type: 3}
+  m_Name: WaitNextNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 0ddb9bafff081754199f801786bfc3bc
+  position: {x: 8, y: 92}
+  description: 
+  child: {fileID: 6459711700152716734}
+  duration: 1

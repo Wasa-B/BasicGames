@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ad2fac2938f616478cd57aa73eb39cd, type: 3}
+  m_Name: Weapon
+  m_EditorClassIdentifier: 
+  state: 0
+  weaponStatus:
+    status:
+      damage:
+        data: 50
+      attackSpeed: 100
+      size: 1
+      ammunition: 6
+      reloadTime: 0.5
+      angle: 10
+      projectileNumber: 1
+      range: 6
+    attackSpeed: 300
+    size: 1
+    ammunition: 6
+    reloadTime: 0.5
+    angle: 1
+    projectileNumber: 1
+    range: 6
+    movementInfo:
+      status:
+        speed: 10
+        acc: 0
+        maxSpeed: 100
+      blockLayer:
+        serializedVersion: 2
+        m_Bits: 128
+      blockMove: 1
+  projectilePrefab: {fileID: 7879242721376548819, guid: 819ab9e4e97eb954396dff4e74d4837c, type: 3}
+  weaponSound:
+    clip: {fileID: 0}
+    volume: 1
+    soundType: 0
