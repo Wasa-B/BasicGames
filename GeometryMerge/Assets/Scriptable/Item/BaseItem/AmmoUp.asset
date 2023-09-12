@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0a29971919ee75448b1102c90a1db63, type: 3}
+  m_Name: AmmoUp
+  m_EditorClassIdentifier: 
+  itemName: 
+  itemIcon: {fileID: 0}
+  itemStatus:
+    GunStatus:
+      damage: 0
+      attackSpeed: 0
+      size: 0
+      range: 0
+      layerMask:
+        serializedVersion: 2
+        m_Bits: 0
+      ammo: 5
+      reloadTime: 0
+      angle: 0
+      projectileNumber: 0
+      projectileMoveStatus:
+        speed: 0
+        acc: 0
+        maxSpeed: 0
+    hpMax: 0
+    moveSpeed: 0

@@ -6,9 +6,9 @@ namespace WasabiGame
     [System.Serializable]
     public class MovementStatus
     {
-        public float speed = 5;
-        public float acc = 0;
-        public float maxSpeed = 10;
+        public float speed ;
+        public float acc ;
+        public float maxSpeed ;
     }
 
     [System.Serializable]
@@ -22,7 +22,9 @@ namespace WasabiGame
 
         public LayerMask blockLayer;
         public bool blockMove = false;
-
+        public bool hitCheck = false;
+        public enum BlockType {RayCast, BoxCast}
+        public BlockType blockType = BlockType.RayCast;
         
     }
 
@@ -109,8 +111,11 @@ namespace WasabiGame
 
         protected RaycastHit2D GetRaycast(float moveAmount)
         {
-            
-            var hit = Physics2D.BoxCast(gameObject.transform.position, collider.size, 0, dir, moveAmount, movementInfo.blockLayer);
+
+            var hit = movementInfo.blockType == MovementInfo.BlockType.BoxCast ?
+                Physics2D.BoxCast(gameObject.transform.position, collider.size, 0, dir, moveAmount, movementInfo.blockLayer)
+                : Physics2D.Raycast(gameObject.transform.position, dir, moveAmount,movementInfo.blockLayer);
+                ;
             
             if (hit)
             {

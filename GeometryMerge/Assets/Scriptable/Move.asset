@@ -21,4 +21,6 @@ MonoBehaviour:
     blockLayer:
       serializedVersion: 2
       m_Bits: 128
-    blockMove: 1
+    blockMove: 0
+    hitCheck: 0
+    blockType: 0

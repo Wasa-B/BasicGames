@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67b47d44170313e48b1192cb6ce7a2ff, type: 3}
+  m_Name: Gun
+  m_EditorClassIdentifier: 
+  coolDown: 3
+  projectile: {fileID: 7041439800321741331, guid: c30ab17091997174aa0cc132e9f258c0, type: 3}
+  hitEffect: {fileID: 2214133915962675697, guid: 5ae862ab3b6123b4ab7e54408ddfedfb, type: 3}
+  range: 10
+  speed: 20
+  damage: 5
+  angleRange: 5
+  updateDirection: 0
+  shotsCount: 5
+  interval: 0.4
+  preDelay: 0.1

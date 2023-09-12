@@ -61,8 +61,9 @@ public class AmmoUI : MonoBehaviour
                     gaugeList[i].gameObject.SetActive(false);
                 }
             }
-            else
+            else if(gaugeList[i].gameObject.activeSelf)
                 gaugeList[i].Play("AmmoGaugeUse");
+            
         }
 
         if (max != bulletMax)

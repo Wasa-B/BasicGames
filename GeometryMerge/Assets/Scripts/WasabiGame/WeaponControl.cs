@@ -6,13 +6,13 @@ namespace WasabiGame
 {
     public class WeaponControl : MonoBehaviour
     {
-        WeaponCommand weapon;
+        GunCommand weapon;
         public float autoReloadTime = .5f;
 
         public LayerMask findLayer;
-        float VisionRadius => weapon.weaponStatus.range;
+        float VisionRadius => weapon.Status.Range;
 
-        internal void SetWeapon(WeaponCommand wapon)
+        internal void SetWeapon(GunCommand wapon)
         {
             this.weapon = wapon;
             weapon.ammoUpdate += AmmoUpdate;
@@ -33,7 +33,7 @@ namespace WasabiGame
         }
         internal void WeaponUse()
         {
-            weapon.weaponUse = true;
+            weapon.WeaponUse();
         }
 
         internal void AmmoUpdate(int ammo, int maxAmmo)
@@ -59,7 +59,6 @@ namespace WasabiGame
                 float distance = float.MaxValue;
                 foreach (var enemy in enemies)
                 {
-                    if (enemy.transform.position.y < transform.position.y) continue;
                     if(distance > Vector2.Distance(transform.position, enemy.transform.position))
                     {
                         distance = Vector2.Distance(transform.position, enemy.transform.position);

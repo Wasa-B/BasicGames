@@ -13,7 +13,7 @@ namespace WasabiGame
         {
             hitActionHdr += action;
         }
-        public void Damage(WeaponStatus weaponStatuses);
+        public void Damage(AttackStatus weaponStatuses);
     }
 
     public class ProjectileControl : PoolObject
@@ -21,14 +21,16 @@ namespace WasabiGame
         public PoolObject hitEffectPrefab;
         public PoolObject endEffectPrefab;
 
-        WeaponStatus weaponStatus;
-        protected float Range { get => weaponStatus.range; }
+        GunStatus weaponStatus;
+        protected float Range { get => weaponStatus.Range; }
         Vector2 dir;
         GameObject owner;
         internal bool fire = false;
         bool hit = false;
         public MoveCommand moveCommand;
 
+        int pierceCount;
+        HashSet<int> damagedObject = new HashSet<int>();
 
         private void Awake()
         {
@@ -38,22 +40,26 @@ namespace WasabiGame
         }
         private void Start()
         {
-            moveCommand.movementInfo.blockLayer = weaponStatus.layerMask;
+            moveCommand.movementInfo.blockLayer = weaponStatus.LayerMask;
         }
         public override void PoolOut()
         {
             fire = true;
             base.PoolOut();
         }
-        internal void UpdateStatus(WeaponStatus weaponStatus, GameObject owner, Vector2 dir)
+        internal void UpdateStatus(GunStatus weaponStatus, GameObject owner, Vector2 dir)
         {
             this.weaponStatus = weaponStatus;
             this.owner = owner;
             //transform.position = owner.transform.position;
-            moveCommand.movementInfo.speed = weaponStatus.movementInfo.speed;
-            moveCommand.movementInfo.maxSpeed = weaponStatus.movementInfo.maxSpeed;
+            moveCommand.movementInfo.speed = weaponStatus.projectileMoveStatus.speed;
+            moveCommand.movementInfo.maxSpeed = weaponStatus.projectileMoveStatus.maxSpeed;
             this.dir = dir.normalized;
             this.hit = false;
+
+            this.pierceCount = weaponStatus.PierceCount;
+            moveCommand.movementInfo.blockMove = false;
+            damagedObject.Clear();
         }
         internal void Fire()
         {
@@ -61,11 +67,22 @@ namespace WasabiGame
         }
         void Hit(RaycastHit2D hit)
         {
+            var hObj = hit.collider.GetInstanceID();
+            if (damagedObject.Contains(hObj))
+                return;
+
+            damagedObject.Add(hObj);
+            hit.collider.gameObject.GetComponent<IDamagedObject>()?.Damage(weaponStatus);
+            pierceCount--;
             var hiteft = PoolManager.GenerateObject(hitEffectPrefab);
             hiteft.transform.position = hit.point;
-            hit.collider.gameObject.GetComponent<IDamagedObject>()?.Damage(weaponStatus);
+            
 
-            this.hit = true;
+            if(pierceCount <= 0)
+            {
+                this.hit = true;
+                moveCommand.movementInfo.blockMove = true;
+            }
         }
         void End(Vector2 vector)
         {

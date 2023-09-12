@@ -6,21 +6,11 @@ namespace CartHero
     [System.Serializable]
     public class PlayerStatus 
     {
-        [System.Serializable]
-        public class UpdateData
-        {
-            [SerializeField]
-            int data;
-            public int Data { get { return data; } set { data = value; updateAction?.Invoke(data); }}
-            public event System.Action<int> updateAction;
-            
-        }
-
         public int hpMax;
         public int HPMax { get => hpMax;set { hpMax = value; hpUpdate?.Invoke(hp,hpMax); } }
         int hp;
         public int HP { get => hp; set { hp = value; if (hp < 0) hp = 0; hpUpdate?.Invoke(hp,hpMax); } }
-        public System.Action<int,int> hpUpdate;
+        public event System.Action<int,int> hpUpdate;
 
         [SerializeField]
         float expRate = 2;
@@ -29,15 +19,15 @@ namespace CartHero
         int exp = 0;
         public int ExpMax { get => expMax; set { expMax = value; expUpdate?.Invoke(exp,expMax); } }
         public int Exp { get => exp; set { exp = value; LevelUp(); expUpdate?.Invoke(exp,expMax); } }
-        public System.Action<int, int> expUpdate;
+        public event System.Action<int, int> expUpdate;
 
         [SerializeField]
         int levelMax;
         int level;
         public int Level { get => level; set { level = value; levelUpdate?.Invoke(level); } }
-        public System.Action<int> levelUpdate;
+        public event System.Action<int> levelUpdate;
 
-        public UpdateData TestData;
+        [SerializeField]
 
         public void Initialize()
         {
@@ -60,9 +50,10 @@ namespace CartHero
         {
             if(exp >= ExpMax)
             {
-                level++;
+                
                 if (level <= levelMax)
                 {
+                    Level++;
                     exp = 0;
                     ExpMax = (int)(expMax * expRate);
                 }

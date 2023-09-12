@@ -16,12 +16,14 @@ MonoBehaviour:
   movementInfo:
     status:
       speed: 0
-      acc: 20
-      maxSpeed: 10
+      acc: 10
+      maxSpeed: 5
     blockLayer:
       serializedVersion: 2
       m_Bits: 128
     blockMove: 1
+    hitCheck: 0
+    blockType: 0
   positions:
   - {x: 0, y: 0}
-  - {x: 20, y: 0}
+  - {x: 0, y: 50}

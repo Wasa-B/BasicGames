@@ -18,9 +18,13 @@ MonoBehaviour:
   enemyGenerateInfos:
   - subGenTime: 0
     subPosition: {x: 0, y: 0}
-  - subGenTime: 2
+  - subGenTime: 0
     subPosition: {x: 1, y: 0}
-  - subGenTime: 2
+  - subGenTime: 1
     subPosition: {x: -1, y: 0}
-  - subGenTime: 2
-    subPosition: {x: 2, y: 0}
+  - subGenTime: 0
+    subPosition: {x: 0, y: 1}
+  - subGenTime: 1
+    subPosition: {x: 0, y: 1}
+  - subGenTime: 1
+    subPosition: {x: 0, y: 1}

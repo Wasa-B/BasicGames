@@ -10,10 +10,10 @@ namespace CartHero
     [System.Serializable]
     public class EnemyStatus
     {
-        public float speed = 1;
-        public int maxHp = 50;
+        public float speed ;
+        public int maxHp ;
         public TriggerVarialbe<int> hp;
-        public int exp = 10;
+        public int exp ;
         /// <summary>
         /// hpUpdate(hp, Maxhp)
         /// </summary>
@@ -24,6 +24,8 @@ namespace CartHero
 
     public class EnemyControl : PoolObject, IDamagedObject
     {
+
+
         public EnemyStatus enemyStatus;
         public SpriteMaskControl hitBlinkObject;
 
@@ -31,8 +33,13 @@ namespace CartHero
 
         internal static event System.Action<int> expUp;
 
+        internal static GameObject target;
+
+        Rigidbody2D rigid;
+
         private void Awake()
         {
+            rigid = GetComponent<Rigidbody2D>();
         }
         // Start is called before the first frame update
         void Start()
@@ -41,13 +48,11 @@ namespace CartHero
         }
         private void FixedUpdate()
         {
-            transform.Translate(Vector2.down * enemyStatus.speed * Time.fixedDeltaTime);
+            rigid.velocity = (target.transform.position - transform.position).normalized*enemyStatus.speed;
+
             if (transform.position.y < -5)
                 EndObject();
         }
-
-
-        
 
         public override void PoolOut()
         {
@@ -60,9 +65,9 @@ namespace CartHero
 
         }
 
-        public void Damage(WeaponStatus weaponStatuses)
+        public void Damage(AttackStatus weaponStatuses)
         {
-            enemyStatus.hp.Value -= weaponStatuses.damage;
+            enemyStatus.hp.Value -= weaponStatuses.Damage;
             hitActionHdr?.Invoke();
 
 
