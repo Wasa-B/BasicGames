@@ -21,7 +21,7 @@ namespace WDefense
             base.Init(owner);
             maxRange = WUtility.Math2D.ProjectileMaxDistance(owner.Position(), standard.y, WeaponSPD, gravity);
             maxAngle = WUtility.Math2D.ProjectileMaxDistanceAngle(owner.Position(), standard.y, WeaponSPD, gravity);
-            Debug.Log("MaxRange : "+maxRange + ", MaxAngle" + maxAngle);
+            //Debug.Log("MaxRange : "+maxRange + ", MaxAngle" + maxAngle);
         }
 
         public override float Range => maxRange;

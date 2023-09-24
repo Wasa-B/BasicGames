@@ -20,6 +20,10 @@ namespace WItem
         public GameObject Owner => null;
 
         public virtual ItemStatus Status { get; protected set; }
+        public virtual T GetStatus<T>() where T : ItemStatus
+        {
+            return (T)Status;
+        }
     }
 
     public class Item : Base_Item
@@ -30,26 +34,19 @@ namespace WItem
         protected string description;
         [SerializeField]
         protected Sprite icon;
-
         public override string Name => itemName;
         public override string Description => description;
         public override Sprite Icon => icon;
-
     }
     
-    public abstract class EquipmentItem : Item, IEquipmentItem
+    public abstract class EquipmentItem : Item
     {
+        public virtual void ItemUpdate() { }
+    }
 
-
-        public string[] GetOptions()
-        {
-            return null;
-        }
-
-        public void ItemUpdate()
-        {
-               
-        }
+    public abstract class ConsumableItem : Item
+    {
+        public virtual void UseItem() { }
     }
 
     [System.Serializable]
@@ -65,22 +62,29 @@ namespace WItem
 
     }
 
+    public class WeaponItem : EquipmentItem
+    {
+
+    }
+
 
     [System.Serializable]
     public class ItemStatus
     {
         public virtual ItemStatus Clone() => new ItemStatus();
     }
-    
 
-    public class ItemInventory
+    [System.Serializable]
+    public class Inventory
     {
-        public List<IConsumableItem> consumableItems = new List<IConsumableItem>();
-        public List<IEquipmentItem> equipmentItems = new List<IEquipmentItem>();
-        public void Update()
-        {
-            for (int i = 0; i < equipmentItems.Count; i++) equipmentItems[i].ItemUpdate();
-        }
+        public virtual void AddItem(Item item) { }
+        public virtual void RemoveItem(Item item) { }
+    }
+
+    [System.Serializable]
+    public class EquipmentInventory
+    {
+        public virtual void ItemEffectUpdate() { }
     }
 }
 

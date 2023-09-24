@@ -57,7 +57,7 @@ public class GameControl : MonoBehaviour
         WDefenseUtility.Delete = RemveObject;
         WDefenseUtility.blockLayerMask = 1 << 8;
 
-
+        
     }
 
     private void FixedUpdate()

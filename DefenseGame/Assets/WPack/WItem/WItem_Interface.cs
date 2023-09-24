@@ -16,15 +16,10 @@ namespace WItem
         public ItemStatus Status { get; }
     }
 
-    public interface IEquipmentItem : IItem
+    public interface IItemUser
     {
-        public string[] GetOptions();
-        public void ItemUpdate();
-    }
-
-    public interface IConsumableItem : IItem
-    {
-
+        public ItemStatus UserStatus { get; }
+        public LayerMask EnemyLayer { get; }
     }
 
     public interface IItemEffect

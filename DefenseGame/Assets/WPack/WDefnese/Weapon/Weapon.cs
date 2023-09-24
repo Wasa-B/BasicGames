@@ -5,9 +5,9 @@ using UnityEngine;
 
 namespace WDefense
 {
-    public class Weapon : ScriptableObject, IWeapon
-    {
 
+    public class Weapon : WItem.Item, IWeapon
+    {
         static protected Vector2 standard = new Vector2(-7f, -2.5f);
         [SerializeField]
         static float minCooltime = .05f;
@@ -15,6 +15,7 @@ namespace WDefense
         public enum State { Start, Wait, Behaviour, End, Remove }
         protected State state = State.Start;
 
+        public ItemStatus passiveStatus;
         public float coolDown = 1;
 
         protected IWeaponUser owner;
@@ -52,8 +53,9 @@ namespace WDefense
                 case State.Remove:
                     break;
             }
-            _ctime += Time.fixedDeltaTime * owner.CooldownSpeedRate;
-            
+            _ctime += Time.fixedDeltaTime;
+//            _ctime += Time.fixedDeltaTime * owner.CooldownSpeedRate;
+
             //Gen_Update();
         }
 
@@ -144,6 +146,9 @@ namespace WDefense
         public virtual int ATK => 0;
         public virtual float SPD => 0;
         public virtual float Range => 0;
+
+
+
         public virtual void Attack(RaycastHit2D hit)
         {
             var attackedObject = hit.collider.GetComponent<IAttackedObject>();

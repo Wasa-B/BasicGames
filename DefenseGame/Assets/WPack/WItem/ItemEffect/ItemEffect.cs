@@ -8,12 +8,7 @@ namespace WItem
     
     public class ItemEffect : ScriptableObject
     {
-        protected Item ownItem;
-
-        internal virtual void Init(Item owner)
-        {
-
-        }
+        public virtual void EffectUse(Item item) { }
     }
 }
 

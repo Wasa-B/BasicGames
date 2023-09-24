@@ -31,29 +31,13 @@ namespace WDefense
         public int HP();
     }
 
-    public interface IItemStatus
-    {
-        public int ATK { get; }
-        public float SPD { get; }
-        public float Range { get; }
-        public float CooldownSpeedRate { get; }
-        public float RangeRate { get; }
-        public float ATKRate { get; }
-    }
-
-    public interface IWeaponStatus : IItemStatus
-    {
-        public int WeaponATK { get; }
-        public float WeaponSPD { get; }
-        public float WeaponRange { get; }
-    }
 
     public interface IItem
     {
         public void EffectOnHit(IAttackedObject target, int damage, Vector2 hitPoint);
     }
 
-    public interface IWeapon : IItem, IWeaponStatus
+    public interface IWeapon : IItem
     {
         public Vector2 DetectOrigin();
         public Vector2 Direction();
@@ -61,6 +45,8 @@ namespace WDefense
         public Vector2 TargetPosition();
         public IWeaponUser Owner();
         public LayerMask TargetLayerMask();
+
+        
         public void Attack(RaycastHit2D hit);
     }
 
@@ -70,10 +56,9 @@ namespace WDefense
         public Vector2 GetVelocity();
     }
 
-    public interface IWeaponUser :ICharacter, IItemStatus
+    public interface IWeaponUser :ICharacter
     {
         public event System.Action<IAttackedObject, int, Vector2> HitEvent;
-
         public void Hit(IAttackedObject target, int damage, Vector2 hitPoint);
 
         public Bounds Bounds();
